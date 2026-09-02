@@ -1,0 +1,53 @@
+schema_version: 1
+
+context:
+  version: "4.4.2"
+
+package:
+  name: pylabfea
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/p/pylabfea/pylabfea-${{ version }}.tar.gz
+  sha256: 73a1368c1d1ccfc24eff02d16f714eda0b9f31045a7fa3aaf997ac703b5a6e70
+
+build:
+  number: 1
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - setuptools
+  run:
+    - python >=${{ python_min }}
+    - numpy
+    - matplotlib-base
+    - scipy
+    - scikit-learn
+    - ipympl
+
+tests:
+  - python:
+      imports:
+        - pylabfea
+      pip_check: true
+      python_version:
+        - ${{ python_min }}
+        - "*"
+
+about:
+  license: GPL-3.0-or-later
+  license_file: LICENSE
+  summary: Python Laboratory for Finite Element Analysis
+  description: |
+    pyLabFEA is a lightweight Python library for finite element analysis.
+    It provides educational and research tools for intuitive FEA modeling with machine learning constitutive models.
+  homepage: https://ahartmaier.github.io/pyLabFEA/
+  repository: https://github.com/AHartmaier/pyLabFEA
+
+extra:
+  recipe-maintainers:
+    - AHartmaier
